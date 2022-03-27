@@ -27,3 +27,22 @@ full_adder fa2 (A[2],B[2],C2,S[2],C3);
 full_adder fa3 (A[3],B[3],C3,S[3],C4);
 endmodule
 ```
+
+- four_bit_adder_test.v
+
+```vhdl
+module adder_test;
+reg[3:0]A;
+reg[3:0]B;
+reg C0;
+wire[3:0]S;
+wire C4;
+four_bit_adder fa (A,B,C0,S,C4);
+initial
+begin
+A=4'b0011;B=4'b0011;C0=1'b0;
+#10 A=4'b1011;B=4'b0111;C0=1'b1;
+#10 A=4'b1111;B=4'b1111;C0=1'b1;
+end
+endmodule
+```
