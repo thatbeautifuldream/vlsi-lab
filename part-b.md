@@ -1,6 +1,6 @@
 # Part B Programs
 
-## 4 bit counter
+## 4 bit adder
 
 - Open terminal in the given folder where script.tcl, constraints.sdc are present.
 
@@ -56,7 +56,7 @@ reg[3:0]B;
 reg C0;
 wire[3:0]S;
 wire C4;
-four_bit_adder fa (A,B,C0,S,C4);
+four_bit_adder dut(A,B,C0,S,C4);
 initial
 begin
 A=4'b0011;B=4'b0011;C0=1'b0;
@@ -141,5 +141,121 @@ d<=1'b0;
 end
 initial
 #100 $finish;
+endmodule
+```
+
+## 4-bit Counter
+
+- counter.v
+
+```vhdl
+`timescale 1ns/1ps
+
+module counter(clk,m,rst,count);
+
+input clk,m,rst;
+output reg[3:0] count;
+
+always@(posedge clk or negedge rst)
+begin
+if(!rst)
+count=0;
+else if(m)
+count=count+1;
+else
+count=count-1;
+end
+endmodule
+```
+
+- counter_test.v
+
+```vhdl
+`timescale 1ns/1ps
+module counter_test;
+reg clk,rst,m;
+wire[3:0] count;
+initial
+begin
+clk=0;
+rst=0;#100;
+rst=1;
+end
+initial
+begin
+m=0;
+#600 m=1;
+#500 m=0;
+end
+counter counter1(clk,m,rst,count);
+always #5 clk=~clk;
+initial $monitor("Time=%t rst=%b clk=%b count=%b",$time,rst,clk,count);
+initial
+#1400 $finish;
+endmodule
+```
+
+## ALU
+
+- alu.v
+
+```vhdl
+module alu_32bit_if(y,a,b,f);
+input [31:0]a,b;
+input [2:0]f;
+output reg[31:0]y;
+always@(*)
+begin
+
+if(f==3'b000)
+y=a&b;
+
+else if(f==3'b001)
+y=a|b;
+else if(f==3'b010)
+y=a^b;
+else if(f==3'b011)
+y=~(a&b);
+else if(f==3'b100)
+y=a+b;
+else if(f==3'b101)
+y=a-b;
+else if(f==3'b110)
+y=a*b;
+else if(f==3'b111)
+y=a/b;
+else
+y=32'bx;
+end
+endmodule
+```
+
+- alu_test.v
+
+```vhdl
+module alu_test;
+reg[31:0]a;
+reg[31:0]b;
+reg[2:0]f;
+wire[31:0]y;
+alu_32bit_if g1(y,a,b,f);
+initial
+begin
+a=32'b00000000;
+b=32'b01010101;
+f=3'b000;
+#10 f=3'b001;
+#10 f=3'b010;
+#10 f=3'b011;
+#10 f=3'b100;
+#10 f=3'b101;
+#10 f=3'b110;
+#10 f=3'b111;
+#10 f=3'bxxx;
+end
+initial
+begin
+#100 $finish;
+end
 endmodule
 ```
