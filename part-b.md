@@ -195,6 +195,52 @@ initial
 endmodule
 ```
 
+- counter_32.v
+
+```vhdl
+`timescale 1ns/1ps
+module counter_32(clk,m,rst,count);
+input clk,m,rst;
+output reg[31:0] count;
+always@(posedge clk or negedge rst)
+begin
+if(!rst)
+count=0;
+else if(m)
+count=count+1;
+else
+count=count-1;
+end
+endmodule
+```
+
+- counter_32_test.v
+
+```vhdl
+`timescale 1ns/1ps
+module counter_32_test;
+reg clk,rst,m;
+wire[31:0] count;
+initial
+begin
+clk=0;
+rst=0;#100;
+rst=1;
+end
+initial
+begin
+m=0;
+#600 m=1;
+#500 m=0;
+end
+counter_32 counter1(clk,m,rst,count);
+always #5 clk=~clk;
+initial $monitor("Time=%t rst=%b clk=%b count=%b",$time,rst,clk,count);
+initial
+#1400 $finish;
+endmodule
+```
+
 ## ALU
 
 - alu.v
