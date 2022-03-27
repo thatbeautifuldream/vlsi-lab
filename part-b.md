@@ -1,4 +1,23 @@
-# 4 bit counter
+# Part B Programs
+
+## 4 bit counter
+
+- Open terminal in the given folder where script.tcl, constraints.sdc are present.
+
+```bash
+csh
+source /home/install/cshrc
+```
+
+- To open Cadance, run the following command:
+
+```bash
+nc launch
+```
+
+- While set design directory, select the folder where all the files are present add cds file.
+- Now, make library of project do not include IEEE library (explicitly for four bit adder program)
+- Type out all the relivant full_adder, four_bit_adder, and adder_test_bench files using gedit.
 
 - full_adder.v
 
@@ -44,5 +63,83 @@ A=4'b0011;B=4'b0011;C0=1'b0;
 #10 A=4'b1011;B=4'b0111;C0=1'b1;
 #10 A=4'b1111;B=4'b1111;C0=1'b1;
 end
+endmodule
+```
+
+- Compile (2nd Icon) all the files in the left window
+- Elaborate (3rd Icon) all files in worklib in right window
+- Launch Simulator (4th Icon) for the sanpshot/test module in right window
+- Right click on the adder in left panel and Send to target > Waveform window
+- Assure (constraints.sdc and script.tcl) presence in the working directory.
+- Run the command in Cadance Tools :
+- To open cadance tools, run the following command:
+
+```bash
+csh
+source /home/install/cshrc
+```
+
+- Furthur run:
+  `genus -f script.tcl`
+
+## D Flip Flop
+
+- Open terminal and type out the following command to open Cadance tools:
+
+```bash
+csh
+source /home/install/cshrc
+```
+
+- To open NCLaunch run the following command:
+
+```bash
+nc launch
+```
+
+- Now, make library of project and include IEEE library
+- Type out all the relivant verilog code dff.v and dff_test.v using gedit.
+
+- dff.v
+
+```vhdl
+module dff(clk,d,reset,q,qbar);
+input clk,d,reset;
+output reg q;
+output qbar;
+always @(posedge clk)
+begin
+if(reset==1'b0)
+q<=1'b0;
+else
+q<=d;
+end
+assign qbar=~q;
+endmodule
+```
+
+- dff_test.v
+
+```vhdl
+module dff_test;
+reg clk,d,reset;
+wire q, qbar;
+dff dut(.clk(clk),.d(d),.reset(reset),.q(q),.qbar(qbar));
+initial
+begin
+clk=0;
+forever #10clk=~clk;
+end
+initial
+begin
+reset=1;
+d<=1'b0;
+#10 reset=1;
+#50 d<=1'b1;
+#50 d<=1'b0;
+#50 d<=1'b1;
+end
+initial
+#100 $finish;
 endmodule
 ```
