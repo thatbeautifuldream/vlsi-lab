@@ -9,7 +9,7 @@ csh
 source /home/install/cshrc
 ```
 
-- To open Cadance, run the following command:
+- To open NCLaunch, run the following command:
 
 ```bash
 nc launch
