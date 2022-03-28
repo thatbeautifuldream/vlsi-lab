@@ -1,4 +1,4 @@
-# Part B Programs
+# Part B Programs [ 📑 `PDF`](./part-b.pdf)
 
 ## 4 bit adder
 
