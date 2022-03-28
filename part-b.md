@@ -12,12 +12,12 @@ source /home/install/cshrc
 - To open NCLaunch, run the following command:
 
 ```bash
-nc launch
+nclaunch
 ```
 
-- While set design directory, select the folder where all the files are present add cds file.
+- While set design directory, select the folder where all the files are present add cds file
 - Now, make library of project do not include IEEE library (explicitly for four bit adder program)
-- Type out all the relivant full_adder, four_bit_adder, and adder_test_bench files using gedit.
+- Type out all the relivant full_adder, four_bit_adder, and adder_test_bench files using gedit
 
 - full_adder.v
 
