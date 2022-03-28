@@ -195,6 +195,8 @@ initial
 endmodule
 ```
 
+## 32 bit Counter
+
 - counter_32.v
 
 ```vhdl
